@@ -1,4 +1,4 @@
-````markdown
+
 # GraphEncoder
 
 The `GraphEncoder` class processes data representing entities and their attributes, calculates cosine similarity between entities based on their attributes, creates a graph with entities as nodes, encodes the shortest path through the graph using the Traveling Salesman Problem (TSP) algorithm, and then applies one-hot encoding to ensure that similar entities are encoded with nearby values.
@@ -17,7 +17,6 @@ You can install the required packages using pip:
 
 ```sh
 pip install numpy pandas networkx scikit-learn
-```
 ````
 
 ## Usage
