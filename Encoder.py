@@ -48,11 +48,11 @@ class CustomerGraph:
         logger.info("Calculating cosine similarity scores...")
         customer_vectors = data.drop(columns=[self.colToEncode, self.colEncodeBasedOn]).values
         similarity_matrix = cosine_similarity(customer_vectors)
-
+        infHandler = len(customer_vectors)+1
         # Calculate scores as 1 divided by cosine similarity
         with np.errstate(divide='ignore'):
             # Calculate scores as 1 divided by cosine similarity, handling division by zero
-            scores = np.where(similarity_matrix == 0, np.inf, 1 / similarity_matrix)
+            scores = np.where(similarity_matrix == 0, infHandler, 1 / similarity_matrix)
         np.fill_diagonal(scores, 0)  # Set diagonal elements to 0 to exclude self-similarity
         self.similarity_matrix = scores
 
@@ -85,23 +85,12 @@ class CustomerGraph:
         """
         logger.info("Encoding shortest path that visits all points and returns to the starting point...")
 
-        # Get the starting point
-        start_point = list(self.customer_labels.keys())[0]
-
-        # Check if start point is in the graph
-        if start_point not in self.graph.nodes:
-            logger.error(f"Start point {start_point} is not in the graph.")
-            return df
-
-        all_shortest_paths = nx.shortest_path(self.graph, source=start_point, weight='weight')
-
-        # Find the longest shortest path among all shortest paths
-        shortest_path = max(all_shortest_paths.values(), key=len)
+        shortest_path = nx.approximation.traveling_salesman_problem(self.graph, cycle=False, method=nx.approximation.christofides)
         count = 0
         for node in shortest_path:
             # Find the row corresponding to the current node
             if node in self.customer_labels:  # Check if customer exists in the graph
-                df.loc[node, 'encoded_tour'] = count
+                df.loc[node, 'encoded'] = count
                 count += 1
             else:
                 logger.warning(f"{node} is not in the graph.")
@@ -113,7 +102,7 @@ def main():
     # Dummy data in a pandas DataFrame
     data = {
         'customer': ['customer1', 'customer2', 'customer3'],
-        'items_purchased': [['a', 'b'], ['d', 'c'], ['a', 'd']]
+        'items_purchased': [['a', 'b'], ['b', 'c'], ['x', 'y']]
     }
     df = pd.DataFrame(data)
     # Specify the column to encode and the base column
