@@ -74,6 +74,4 @@ Replace `'entity'` and `'attributes'` with the appropriate column names from you
 
 Nika Golestani
 
-```
 
-```
