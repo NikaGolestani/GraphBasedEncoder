@@ -74,7 +74,4 @@ Replace `'entity'` and `'attributes'` with the appropriate column names from you
 
 Nika Golestani
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
