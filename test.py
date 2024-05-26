@@ -1,8 +1,8 @@
 import unittest
 import pandas as pd
-from Encoder import CustomerGraph
+from Encoder import GraphEncoder
 
-class TestCustomerGraph(unittest.TestCase):
+class TestGraphEncoder(unittest.TestCase):
     def run_test(self, data, expected):
         # Input data
         df = pd.DataFrame(data)
@@ -10,8 +10,8 @@ class TestCustomerGraph(unittest.TestCase):
         col = 'customer'
         base = 'items_purchased'
 
-        # Create CustomerGraph instance
-        customer_graph = CustomerGraph(df, col, base)
+        # Create GraphEncoder instance
+        customer_graph = GraphEncoder(df, col, base)
         # Preprocess data
         df_processed = customer_graph.preprocess_data()
         # Calculate cosine similarity scores

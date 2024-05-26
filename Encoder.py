@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
-class CustomerGraph:
+class GraphEncoder:
     def __init__(self, data,col,base):
         self.data = data[[col,base]]
         self.colToEncode = col
