@@ -97,35 +97,3 @@ class CustomerGraph:
 
         return df
 
-
-def main():
-    # Dummy data in a pandas DataFrame
-    data = {
-        'customer': ['customer1', 'customer2', 'customer3'],
-        'items_purchased': [['a', 'b'], ['b', 'c'], ['x', 'y']]
-    }
-    df = pd.DataFrame(data)
-    # Specify the column to encode and the base column
-    col = 'customer'
-    base = 'items_purchased'
-
-    # Create CustomerGraph instance
-    customer_graph = CustomerGraph(df, col, base)
-
-    # Preprocess data
-    df = customer_graph.preprocess_data()
-
-    # Calculate cosine similarity scores
-    customer_graph.calculate_cosine_similarity(df)
-
-    # Create a graph
-    customer_graph.create_graph()
-
-    # Encode shortest paths for all customers
-    df = customer_graph.encode_shortest_path(df)
-
-    print(df)
-
-
-if __name__ == "__main__":
-    main()
